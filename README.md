@@ -26,6 +26,7 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
 - Uses a **lookup table** (`crc_table`) initialized with precomputed CRC values.
 - Supports asynchronous clear/reset (`clear` signal).
 
+
 ### `tb_crc_parallel.v`
 - Provides clock stimulus and sequentially feeds data inputs to the CRC module.
 - Verifies the output of the CRC after all stages complete.
