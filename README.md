@@ -17,4 +17,28 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
 ## 📁 Repository Structure
 
 
+---
+
+## ⚙️ Files Description
+
+### `crc_parallel.v`
+- Implements a **5-stage pipeline** to compute CRC-16 over a 16-bit input word.
+- Uses a **lookup table** (`crc_table`) initialized with precomputed CRC values.
+- Supports asynchronous clear/reset (`clear` signal).
+
+### `tb_crc_parallel.v`
+- Provides clock stimulus and sequentially feeds data inputs to the CRC module.
+- Verifies the output of the CRC after all stages complete.
+
+---
+
+## 🧪 How to Simulate
+
+You can simulate the design using any Verilog simulator like **ModelSim**, **Xilinx Vivado**, or **Icarus Verilog**.
+
+### Example using Icarus Verilog + GTKWave:
+```bash
+iverilog -o crc_test crc_parallel.v tb_crc_parallel.v
+vvp crc_test
+
 
