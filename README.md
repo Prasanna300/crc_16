@@ -25,6 +25,78 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
 - Implements a **5-stage pipeline** to compute CRC-16 over a 16-bit input word.
 - Uses a **lookup table** (`crc_table`) initialized with precomputed CRC values.
 - Supports asynchronous clear/reset (`clear` signal).
+  ## 'crc_verilog code'
+  module crc_parallel(clk,data_in,clear,crc_out); 
+    input clk;
+    input [15:0] data_in;
+    input clear;
+    output wire [15:0] crc_out;
+
+
+parameter POLY =  16'h8005;
+reg [15:0] crc_table [0:255];
+
+
+integer i;
+integer j;
+reg[15:0]c;
+initial begin
+
+    for (i = 0; i < 256; i = i + 1) begin
+        c = i;
+     
+        for (j = 0; j < 8; j = j + 1)
+            c = (c & 1) ? (POLY ^ (c >> 1)) : (c >> 1);
+        crc_table[i] = c;
+    end
+end
+
+
+reg [15:0] stage1_crc;
+reg [15:0] stage2_crc;
+reg [15:0] stage3_crc;
+reg [15:0] stage4_crc;
+reg [15:0]crc_temp;
+
+always @(posedge clk) begin
+    if (clear)
+        stage1_crc <= 16'hFFFF ^ data_in;
+    else
+        stage1_crc <= crc_temp ^ data_in;
+end
+
+
+always @(posedge clk ) begin
+    if (clear)
+        stage2_crc <= 16'hFFFF;
+    else
+        stage2_crc <= crc_table[stage1_crc[7:0]] ^ (stage1_crc >> 8);
+end
+
+always @(posedge clk ) begin
+    if (clear)
+        stage3_crc <= 16'hFFFF;
+    else
+        stage3_crc <= crc_table[stage2_crc[7:0]] ^ (stage2_crc >> 8);
+end
+
+
+always @(posedge clk) begin
+    if (clear)
+        stage4_crc <= 16'hFFFF;
+    else
+        stage4_crc <= crc_table[stage3_crc[7:0]] ^ (stage3_crc >> 8);
+end
+
+
+always @(posedge clk ) begin
+    if (clear)
+        crc_temp<= 16'hFFFF;
+    else
+        crc_temp <= crc_table[stage4_crc[7:0]] ^ (stage4_crc >> 8);
+end
+assign crc_out=~crc_temp;
+endmodule
 
 
 ### `tb_crc_parallel.v`
