@@ -35,7 +35,7 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
 
       reg [15:0]i;
       reg [15:0] j;
-      //integer i,j;
+      
        reg[15:0]c;
       initial begin
 
@@ -56,37 +56,21 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
       reg [15:0]crc_temp;
 
 
-
-       //reg [19:0]sc;
-
-      //always @(posedge clk)
-       //begin
-      //if(clear)
-       //sc=0;
-      //else
-      //sc=sc+1;
-      //end
-
       reg q1,q2;
       wire pbclk;
 
        always@(posedge clk)
        begin
        if(clear)
-      begin
-      q1<=0;
-      q2<=0;
-
-
-      end
-
+             begin
+                q1<=0;
+                q2<=0;
+             end
       else
- 
-       begin
-       q1<=pb;
-      q2<=q1;
-
-      end
+         begin
+            q1<=pb;
+           q2<=q1;
+         end
       end
 
       assign pbclk=q1& ~q2;
