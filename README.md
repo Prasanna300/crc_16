@@ -12,14 +12,6 @@ This repository contains a Verilog implementation of the **CRC-16** (Cyclic Redu
 ### Polynomial Used:
 This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 1 → 0x8005 
 
----
-
-## 📁 Repository Structure
-
-
----
-
-## ⚙️ Files Description
 
 ### `crc_parallel.v`
 - Implements a **5-stage pipeline** to compute CRC-16 over a 16-bit input word.
