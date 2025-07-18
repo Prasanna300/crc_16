@@ -189,4 +189,8 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
 ## SIMULATION OUTPUT :
 <img width="1538" height="651" alt="Screenshot 2025-06-09 124650" src="https://github.com/user-attachments/assets/c08ec1d9-e76c-4b1f-bfb5-2fffe90cfef0" />
 
+## SCHECMATIC DESIGN : schematic of crc 16 
+
+<img width="1549" height="635" alt="Screenshot 2025-07-18 174149" src="https://github.com/user-attachments/assets/3822e0c4-7009-46ee-bc35-1116955d0fff" />
+
 
