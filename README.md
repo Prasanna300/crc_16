@@ -266,4 +266,7 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
     set_property -dict { PACKAGE_PIN U18   IOSTANDARD LVCMOS33 } [get_ports clear]
     set_property -dict { PACKAGE_PIN T18   IOSTANDARD LVCMOS33 } [get_ports pb]
      #set_property -dict { PACKAGE_PIN W19   IOSTANDARD LVCMOS33 } [get_ports btnL]
- 
+ ## IMPLEMENTATION ON BASYS 3 BOARD :
+
+ ![WhatsApp Image 2025-07-18 at 17 49 18_b6bca082](https://github.com/user-attachments/assets/85891663-f1db-4d8b-b8f0-19f444ca523a)
+
