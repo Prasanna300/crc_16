@@ -113,25 +113,78 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
       end
       assign crc_out=~crc_temp;
 
-      //reg [2:0]count;
-      //always@(posedge pbclk )
-      //begin
-      //if(clear)
-      //count=0;
-
-       //else
-      //begin
-      // count = count +1;
-      // if(count==5)
-      //begin
-      //crc_out=~crc_temp;
-      //end
-
-      //end
-
-      //end
+      
       endmodule 
 
+## VERILOG TEST BENCH:
 
+*  
+
+       module tb_crc_parallel;
+
+  
+       reg clk;
+       reg pb;
+       reg [15:0] data_in;
+       reg clear;
+
+   
+       wire [15:0] crc_out;
+
+   
+       crc_parallel uut (
+        .pb(pb),
+        .clk(clk),
+        .data_in(data_in),
+        .clear(clear),
+        .crc_out(crc_out)
+       );
+ 
+    
+       always #5 clk = ~clk;
+
+    
+       task send_data(input [15:0] din);
+        begin
+            @(posedge clk);
+            data_in = din;
+            pb = 1;
+            @(posedge clk);
+            pb = 0;
+            @(posedge clk);  
+        end
+       endtask
+
+ 
+       initial begin
+        $monitor("Time = %0t | data_in = %h | crc_out = %h", $time, data_in, crc_out);
+       end
+
+  
+       initial begin
+        $dumpfile("crc_parallel.vcd");
+        $dumpvars(0, tb_crc_parallel);
+       end
+       initial begin
+          clk = 0;
+        pb = 0;
+        clear = 1;
+        data_in = 16'h0000;
+
+      
+        #20;
+        clear = 0;
+
+        send_data(16'h0000);
+        send_data(16'h5678);
+        send_data(16'hccdd);
+        send_data(16'hffff);
+        send_data(16'h0000);
+
+     
+        #100;
+        $finish;
+       end
+       endmodule
 
 
