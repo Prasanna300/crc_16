@@ -25,149 +25,135 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
 - Implements a **5-stage pipeline** to compute CRC-16 over a 16-bit input word.
 - Uses a **lookup table** (`crc_table`) initialized with precomputed CRC values.
 - Supports asynchronous clear/reset (`clear` signal).
-  ## 'crc_verilog code'
+  VERILOG CODE :
 
-module crc_parallel(pb,clk,data_in,clear,crc_out); 
-    input clk,pb;
-    input [15:0] data_in;
-    input clear;
-    output wire [15:0] crc_out;
-// wire 
-
-
-parameter POLY =  16'h8005;
-reg [15:0] crc_table [0:255];
+*      module crc_parallel(pb,clk,data_in,clear,crc_out); 
+      input clk,pb;
+      input [15:0] data_in;
+      input clear;
+      output wire [15:0] crc_out;
+      // wire 
 
 
-reg [15:0]i;
-reg [15:0] j;
-//integer i,j;
-reg[15:0]c;
-initial begin
+      parameter POLY =  16'h8005;
+      reg [15:0] crc_table [0:255];
 
-    for (i = 0; i < 256; i = i + 1) begin
+
+      reg [15:0]i;
+      reg [15:0] j;
+      //integer i,j;
+       reg[15:0]c;
+      initial begin
+
+      for (i = 0; i < 256; i = i + 1) begin
         c = i;
      
         for (j = 0; j < 8; j = j + 1)
             c = (c & 1) ? (POLY ^ (c >> 1)) : (c >> 1);
         crc_table[i] = c;
-    end
-end
+      end
+       end
 
 
-reg [15:0] stage1_crc;
-reg [15:0] stage2_crc;
-reg [15:0] stage3_crc;
-reg [15:0] stage4_crc;
-reg [15:0]crc_temp;
+       reg [15:0] stage1_crc;
+      reg [15:0] stage2_crc;
+      reg [15:0] stage3_crc;
+      reg [15:0] stage4_crc;
+      reg [15:0]crc_temp;
 
 
 
-//reg [19:0]sc;
+       //reg [19:0]sc;
 
-//always @(posedge clk)
-//begin
-//if(clear)
-//sc=0;
-//else
-//sc=sc+1;
-//end
+      //always @(posedge clk)
+       //begin
+      //if(clear)
+       //sc=0;
+      //else
+      //sc=sc+1;
+      //end
 
-reg q1,q2;
-wire pbclk;
+      reg q1,q2;
+      wire pbclk;
 
-always@(posedge clk)
-begin
-if(clear)
-begin
-q1<=0;
-q2<=0;
+       always@(posedge clk)
+       begin
+       if(clear)
+      begin
+      q1<=0;
+      q2<=0;
 
 
-end
+      end
 
-else
+      else
+ 
+       begin
+       q1<=pb;
+      q2<=q1;
 
-begin
-q1<=pb;
-q2<=q1;
+      end
+      end
 
-end
-end
-
-assign pbclk=q1& ~q2;
-always @(posedge pbclk) begin
-    if (clear)
+      assign pbclk=q1& ~q2;
+      always @(posedge pbclk) begin
+       if (clear)
         stage1_crc = 16'hFFFF ^ data_in;
-    else
+       else
         stage1_crc = crc_temp ^ data_in;
-end
+      end
 
 
-always @(posedge pbclk ) begin
-    if (clear)
+      always @(posedge pbclk ) begin
+      if (clear)
         stage2_crc = 16'hFFFF;
-    else
+       else
         stage2_crc = crc_table[stage1_crc[7:0]] ^ (stage1_crc >> 8);
-end
+      end
 
-always @(posedge pbclk  ) begin
-    if (clear)
+      always @(posedge pbclk  ) begin
+       if (clear)
         stage3_crc = 16'hFFFF;
-    else
+      else
         stage3_crc = crc_table[stage2_crc[7:0]] ^ (stage2_crc >> 8);
-end
+       end
 
 
-always @(posedge pbclk) begin
-    if (clear)
+       always @(posedge pbclk) begin
+       if (clear)
         stage4_crc = 16'hFFFF;
-    else
+       else
         stage4_crc = crc_table[stage3_crc[7:0]] ^ (stage3_crc >> 8);
-end
+       end
 
 
-always @(posedge pbclk) begin
-    if (clear)
+      always @(posedge pbclk) begin
+       if (clear)
         crc_temp= 16'hFFFF;
-    else
+      else
         crc_temp = crc_table[stage4_crc[7:0]] ^ (stage4_crc >> 8);
-end
-assign crc_out=~crc_temp;
+      end
+      assign crc_out=~crc_temp;
 
-//reg [2:0]count;
-//always@(posedge pbclk )
-//begin
-//if(clear)
-//count=0;
+      //reg [2:0]count;
+      //always@(posedge pbclk )
+      //begin
+      //if(clear)
+      //count=0;
 
-//else
-//begin
-// count = count +1;
-//if(count==5)
-//begin
-//crc_out=~crc_temp;
-//end
+       //else
+      //begin
+      // count = count +1;
+      // if(count==5)
+      //begin
+      //crc_out=~crc_temp;
+      //end
 
-//end
+      //end
 
-//end
-endmodule 
+      //end
+      endmodule 
 
 
-### `tb_crc_parallel.v`
-- Provides clock stimulus and sequentially feeds data inputs to the CRC module.
-- Verifies the output of the CRC after all stages complete.
-
----
-
-## 🧪 How to Simulate
-
-You can simulate the design using any Verilog simulator like **ModelSim**, **Xilinx Vivado**, or **Icarus Verilog**.
-
-### Example using Icarus Verilog + GTKWave:
-```bash
-iverilog -o crc_test crc_parallel.v tb_crc_parallel.v
-vvp crc_test
 
 
