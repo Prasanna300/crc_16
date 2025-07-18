@@ -186,5 +186,7 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
         $finish;
        end
        endmodule
+## SIMULATION OUTPUT :
+<img width="1538" height="651" alt="Screenshot 2025-06-09 124650" src="https://github.com/user-attachments/assets/c08ec1d9-e76c-4b1f-bfb5-2fffe90cfef0" />
 
 
