@@ -18,7 +18,7 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
 - Uses a **lookup table** (`crc_table`) initialized with precomputed CRC values.
 - Supports asynchronous clear/reset (`clear` signal)
 
-- 
+
  ## VERILOG CODE :
 
 *      module crc_parallel(pb,clk,data_in,clear,crc_out); 
