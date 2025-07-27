@@ -21,100 +21,107 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
 
  ## VERILOG CODE :
 
-*      module crc_parallel(pb,clk,data_in,clear,crc_out); 
-      input clk,pb;
-      input [15:0] data_in;
-      input clear;
-      output wire [15:0] crc_out;
-      // wire 
+
+*    
+
+    //////////////////////////////////////////////////////////////////////////////////
+    // Company: 
+    // Engineer:  LANKA SRI LAXMI PRASANNA KUMAR
+    // 
+    // Create Date: 27.04.2025 10:08:11
+    // Design Name: 
+    // Module Name: crc_parallel
+    // Project Name: 
+    // Target Devices: 
+    // Tool Versions: 
+    // Description: 
+    // 
+    // Dependencies: 
+    // 
+    // Revision:
+    // Revision 0.01 - File Created
+    // Additional Comments:
+    // 
+    //////////////////////////////////////////////////////////////////////////////////
 
 
-      parameter POLY =  16'h8005;
-      reg [15:0] crc_table [0:255];
+    module crc_parallel(clk1,clk2,data_in,clear,crc_out); 
+    input clk1,clk2;
+    input [7:0] data_in;
+    input clear;
+    output wire [15:0] crc_out;
+    // wire 
 
 
-      reg [15:0]i;
-      reg [15:0] j;
-      
-       reg[15:0]c;
-      initial begin
+    parameter POLY =  16'h8005;
+    reg [15:0] crc_table [0:255];
 
-      for (i = 0; i < 256; i = i + 1) begin
+
+    //reg [15:0]i;
+    //reg [15:0] j;
+    integer i,j;
+    reg[15:0]c;
+    initial begin
+
+    for (i = 0; i < 256; i = i + 1) begin
         c = i;
      
         for (j = 0; j < 8; j = j + 1)
             c = (c & 1) ? (POLY ^ (c >> 1)) : (c >> 1);
         crc_table[i] = c;
-      end
-       end
+    end
+    end
 
 
-       reg [15:0] stage1_crc;
-      reg [15:0] stage2_crc;
-      reg [15:0] stage3_crc;
-      reg [15:0] stage4_crc;
-      reg [15:0]crc_temp;
+    reg [15:0] stage1_crc;
+    reg [15:0] stage2_crc;
+    reg [15:0] stage3_crc;
+    reg [15:0] stage4_crc;
+    reg [15:0]crc_temp;
 
 
-      reg q1,q2;
-      wire pbclk;
 
-       always@(posedge clk)
-       begin
-       if(clear)
-             begin
-                q1<=0;
-                q2<=0;
-             end
-      else
-         begin
-            q1<=pb;
-           q2<=q1;
-         end
-      end
-
-      assign pbclk=q1& ~q2;
-      always @(posedge pbclk) begin
-       if (clear)
-        stage1_crc = 16'hFFFF ^ data_in;
-       else
-        stage1_crc = crc_temp ^ data_in;
-      end
+    always @(posedge clk1) begin
+    if (clear)
+        stage1_crc  <= 16'hFFFF ^ data_in;
+    else
+        stage1_crc  <= crc_temp ^ data_in;
+    end
 
 
-      always @(posedge pbclk ) begin
-      if (clear)
-        stage2_crc = 16'hFFFF;
-       else
-        stage2_crc = crc_table[stage1_crc[7:0]] ^ (stage1_crc >> 8);
-      end
+    always @(posedge clk2 ) begin
+    if (clear)
+        stage2_crc <= 16'hFFFF;
+    else
+        stage2_crc  <= crc_table[stage1_crc[7:0]];
+    end
 
-      always @(posedge pbclk  ) begin
-       if (clear)
-        stage3_crc = 16'hFFFF;
-      else
-        stage3_crc = crc_table[stage2_crc[7:0]] ^ (stage2_crc >> 8);
-       end
-
-
-       always @(posedge pbclk) begin
-       if (clear)
-        stage4_crc = 16'hFFFF;
-       else
-        stage4_crc = crc_table[stage3_crc[7:0]] ^ (stage3_crc >> 8);
-       end
+    always @(posedge clk1 ) begin
+    if (clear)
+        stage3_crc <= 16'hFFFF;
+    else
+        stage3_crc <=  (crc_temp >> 8);
+    end
 
 
-      always @(posedge pbclk) begin
-       if (clear)
-        crc_temp= 16'hFFFF;
-      else
-        crc_temp = crc_table[stage4_crc[7:0]] ^ (stage4_crc >> 8);
-      end
-      assign crc_out=~crc_temp;
+    always @(posedge clk2) begin
+    if (clear)
+        stage4_crc <= 16'hFFFF;
+    else
+        stage4_crc <= stage2_crc ^ stage3_crc ;
+    end
 
-      
-      endmodule 
+
+    always @(posedge clk1) begin
+    if (clear)
+        crc_temp  <= 16'hFFFF;
+    else
+        crc_temp <= stage4_crc ;
+    end
+     assign crc_out=~crc_temp;
+
+
+    endmodule 
 
 ## VERILOG TEST BENCH:
 
