@@ -125,73 +125,72 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
 
 ## VERILOG TEST BENCH:
 
-*  
+*  `timescale 1ns/1ps
 
        module tb_crc_parallel;
 
-  
-       reg clk;
-       reg pb;
-       reg [15:0] data_in;
+        reg clk1, clk2;
+       reg [7:0] data_in;
        reg clear;
-
-   
        wire [15:0] crc_out;
 
    
-       crc_parallel uut (
-        .pb(pb),
-        .clk(clk),
+       crc_parallel dut (
+        .clk1(clk1),
+        .clk2(clk2),
         .data_in(data_in),
         .clear(clear),
         .crc_out(crc_out)
        );
- 
-    
-       always #5 clk = ~clk;
 
     
-       task send_data(input [15:0] din);
-        begin
-            @(posedge clk);
-            data_in = din;
-            pb = 1;
-            @(posedge clk);
-            pb = 0;
-            @(posedge clk);  
+        parameter PERIOD = 20; 
+       initial begin
+        clk1 = 0;
+        clk2 = 0;
+        forever begin
+            #(PERIOD/2) clk1 = 1;    
+            #(PERIOD/4) clk1 = 0;    
+            #(PERIOD/4);             
+            clk2 = 1;               
+            #(PERIOD/4) clk2 = 0;   
+            #(PERIOD/4);             
         end
-       endtask
-
- 
-       initial begin
-        $monitor("Time = %0t | data_in = %h | crc_out = %h", $time, data_in, crc_out);
        end
 
-  
+   
+       integer k;
        initial begin
-        $dumpfile("crc_parallel.vcd");
-        $dumpvars(0, tb_crc_parallel);
-       end
-       initial begin
-          clk = 0;
-        pb = 0;
+        
+        data_in = 8'h00;
         clear = 1;
-        data_in = 16'h0000;
 
-      
-        #20;
-        clear = 0;
+        
+        #30 clear = 1;
+        #40 clear = 0;
+        
+        
+        for (k = 0; k < 10; k = k + 1) begin
+            @(posedge clk1);
+            data_in = k;
+        end
 
-        send_data(16'h0000);
-        send_data(16'h5678);
-        send_data(16'hccdd);
-        send_data(16'hffff);
-        send_data(16'h0000);
+        
+        repeat (8) @(posedge clk1);
 
-     
-        #100;
-        $finish;
+        $display("Final CRC out = %h", crc_out);
+        $stop;
        end
+
+    
+       initial begin
+        $dumpfile("crc_parallel_tb.vcd");
+        $dumpvars(0, tb_crc_parallel);
+
+        $display("time   clk1 clk2 clear data_in    crc_out");
+        $monitor("%4t   %b    %b    %b    0x%02x    0x%04x", $time, clk1, clk2, clear, data_in, crc_out);
+       end
+
        endmodule
 ## SIMULATION OUTPUT :
 <img width="1538" height="651" alt="Screenshot 2025-06-09 124650" src="https://github.com/user-attachments/assets/c08ec1d9-e76c-4b1f-bfb5-2fffe90cfef0" />
