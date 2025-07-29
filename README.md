@@ -19,6 +19,11 @@ a high-performance hardware implementation of the CRC-16 (Cyclic Redundancy Chec
   - Parameterizable Polynomial:
          Implemented with the standard CRC-16 polynomial (0x8005), but the design can be adapted to other polynomials with minimal changes.
 
+# CRC COMPUTATION :
+![WhatsApp Image 2025-07-29 at 11 24 23_b084080f](https://github.com/user-attachments/assets/b1adb7dc-90e6-49a8-bff5-7f55674c48f1)
+
+
+  
 # Technical Highlights
  - Parallel CRC-16 Calculation
  - 256-entry LUT generation at synthesis time (Verilog initial block)
