@@ -5,19 +5,19 @@ a high-performance hardware implementation of the CRC-16 (Cyclic Redundancy Chec
 
 # Key Features
   - Lookup Table (LUT) Approach:
-Utilizes a precomputed 256-entry LUT for rapid CRC updates, reducing combinational complexity compared to bit-serial architectures.
+     Utilizes a precomputed 256-entry LUT for rapid CRC updates, reducing combinational complexity compared to bit-serial architectures.
 
   - Pipelined Architecture:
-Employs a multi-stage pipeline with register stages (stage1_crc, stage2_crc, stage3_crc, stage4_crc) to increase computation speed and support higher clock frequencies, making it suitable for high-speed, high-bandwidth applications.
+         Employs a multi-stage pipeline with register stages (stage1_crc, stage2_crc, stage3_crc, stage4_crc) to increase computation speed and support higher clock frequencies, making it suitable for high-  speed, high-bandwidth applications.
 
   - Dual-Clock Support:
-Supports two independent clocks (clk1 and clk2), facilitating integration into multi-clock domain systems and providing further optimization opportunities.
+           Supports two independent clocks (clk1 and clk2), facilitating integration into multi-clock domain systems and providing further optimization opportunities.
 
    - Immediate CRC Output:
-CRC is computed and available on the output with minimal latency due to the efficient pipeline stages.
+          CRC is computed and available on the output with minimal latency due to the efficient pipeline stages.
 
   - Parameterizable Polynomial:
-Implemented with the standard CRC-16 polynomial (0x8005), but the design can be adapted to other polynomials with minimal changes.
+         Implemented with the standard CRC-16 polynomial (0x8005), but the design can be adapted to other polynomials with minimal changes.
 
 # Technical Highlights
  - Parallel CRC-16 Calculation
