@@ -28,7 +28,7 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
     // Company: 
     // Engineer:  LANKA SRI LAXMI PRASANNA KUMAR
     // 
-    // Create Date: 27.04.2025 10:08:11
+    // Create Date: 
     // Design Name: 
     // Module Name: crc_parallel
     // Project Name: 
@@ -193,7 +193,7 @@ This project uses the standard CRC-16-IBM polynomial:POLY = x^16 + x^15 + x^2 + 
 
        endmodule
 ## SIMULATION OUTPUT :
-<img width="1538" height="651" alt="Screenshot 2025-06-09 124650" src="https://github.com/user-attachments/assets/c08ec1d9-e76c-4b1f-bfb5-2fffe90cfef0" />
+<img width="1612" height="918" alt="Screenshot 2025-07-29 103826" src="https://github.com/user-attachments/assets/c8787ea2-42f8-46d7-8156-dff14158a0d5" />
 
 ## SCHECMATIC DESIGN : schematic of crc 16 
 
