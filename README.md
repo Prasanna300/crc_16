@@ -300,5 +300,8 @@ Ideal for use in:
 
 # Refrences :
 
-- "High Performance Table-Based Algorithm for Pipelined CRC Generation" by Y Sun et al., Journal of Communications, 2013;
-- "Design and Simulation of Parallel CRC Generation Using Pipelined Architecture" (IJAREEIE, 2015);
+- "High Performance Table-Based Algorithm for Pipelined CRC Generation" by Y Sun et al., Journal of Communications, 2013.
+- "Design and Simulation of Parallel CRC Generation Using Pipelined Architecture" (IJAREEIE, 2015).
+- “High Performance Table-Based Algorithm for Pipelined CRC Generation” – Yan Sun & Min Sik Kim, Journal of Communications, 2013.
+- “Design and Simulation of Parallel CRC Generation Architecture for High Speed Application” – IJAREEIE, 2015
+- US8001446B2 – Pipelined Cyclic Redundancy Check (CRC) Patent
