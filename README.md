@@ -298,3 +298,7 @@ Ideal for use in:
 
  ![WhatsApp Image 2025-07-18 at 17 49 18_b6bca082](https://github.com/user-attachments/assets/85891663-f1db-4d8b-b8f0-19f444ca523a)
 
+# Refrences :
+
+- "High Performance Table-Based Algorithm for Pipelined CRC Generation" by Y Sun et al., Journal of Communications, 2013;
+- "Design and Simulation of Parallel CRC Generation Using Pipelined Architecture" (IJAREEIE, 2015);
