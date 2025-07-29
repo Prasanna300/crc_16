@@ -28,11 +28,11 @@ Implemented with the standard CRC-16 polynomial (0x8005), but the design can be 
 
 # Applications
 Ideal for use in:
-             -   Data communication protocols (USB, Ethernet, SPI, etc.)
-             -   Storage devices
-             -   Error detection in streaming data
-             -   Real-time embedded systems requiring rapid CRC validation
-             -   This implementation exemplifies best practices in digital design, including pipeline parallelism and LUT utilization, to achieve fast and robust CRC-16 computation with low resource usage and      minimal latency.
+-   Data communication protocols (USB, Ethernet, SPI, etc.)
+-   Storage devices
+-   Error detection in streaming data
+-   Real-time embedded systems requiring rapid CRC validation
+-   This implementation exemplifies best practices in digital design, including pipeline parallelism and LUT utilization, to achieve fast and robust CRC-16 computation with low resource usage and      minimal latency.
 
 
  ## VERILOG CODE :
