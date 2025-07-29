@@ -1,5 +1,5 @@
- # crc_16
-# CRC-16 Error Detection in Verilog
+ #  PARALLEL AND 5-STAGE PIPELINED  CRC -16  
+#   parallel and 5-stage pipelined CRC-16 Error Detection in Verilog
 
 a high-performance hardware implementation of the CRC-16 (Cyclic Redundancy Check) calculation, optimized for FPGA design. The design leverages a lookup table (LUT)-based approach for fast CRC computation and employs pipelined architecture to maximize throughput and enable real-time data processing.
 
