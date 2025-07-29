@@ -19,14 +19,14 @@ CRC is computed and available on the output with minimal latency due to the effi
 *Parameterizable Polynomial:
 Implemented with the standard CRC-16 polynomial (0x8005), but the design can be adapted to other polynomials with minimal changes.
 
-#Technical Highlights
+# Technical Highlights
   Parallel CRC-16 Calculation
   256-entry LUT generation at synthesis time (Verilog initial block)
   Pipeline registers for each stage to ensure high throughput and stable timing.
   Asynchronous clear signal (clear) for pipeline reset.
   Bit-wise operations and table indexing for efficient byte-wise CRC computation.
 
-#Applications
+# Applications
 Ideal for use in:
                Data communication protocols (USB, Ethernet, SPI, etc.)
                Storage devices
