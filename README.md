@@ -3,45 +3,36 @@
 
 a high-performance hardware implementation of the CRC-16 (Cyclic Redundancy Check) calculation, optimized for FPGA design. The design leverages a lookup table (LUT)-based approach for fast CRC computation and employs pipelined architecture to maximize throughput and enable real-time data processing.
 
-## Key Features
- #Lookup Table (LUT) Approach:
+# Key Features
+ *Lookup Table (LUT) Approach:
 Utilizes a precomputed 256-entry LUT for rapid CRC updates, reducing combinational complexity compared to bit-serial architectures.
 
- # Pipelined Architecture:
+ *Pipelined Architecture:
 Employs a multi-stage pipeline with register stages (stage1_crc, stage2_crc, stage3_crc, stage4_crc) to increase computation speed and support higher clock frequencies, making it suitable for high-speed, high-bandwidth applications.
 
- #Dual-Clock Support:
+ *Dual-Clock Support:
 Supports two independent clocks (clk1 and clk2), facilitating integration into multi-clock domain systems and providing further optimization opportunities.
 
- #Immediate CRC Output:
+ *Immediate CRC Output:
 CRC is computed and available on the output with minimal latency due to the efficient pipeline stages.
 
-#Parameterizable Polynomial:
+*Parameterizable Polynomial:
 Implemented with the standard CRC-16 polynomial (0x8005), but the design can be adapted to other polynomials with minimal changes.
 
-##Technical Highlights
-Parallel CRC-16 Calculation
+#Technical Highlights
+  Parallel CRC-16 Calculation
+  256-entry LUT generation at synthesis time (Verilog initial block)
+  Pipeline registers for each stage to ensure high throughput and stable timing.
+  Asynchronous clear signal (clear) for pipeline reset.
+  Bit-wise operations and table indexing for efficient byte-wise CRC computation.
 
-256-entry LUT generation at synthesis time (Verilog initial block)
-
-Pipeline registers for each stage to ensure high throughput and stable timing.
-
-Asynchronous clear signal (clear) for pipeline reset.
-
-Bit-wise operations and table indexing for efficient byte-wise CRC computation.
-
-##Applications
+#Applications
 Ideal for use in:
-
-Data communication protocols (USB, Ethernet, SPI, etc.)
-
-Storage devices
-
-Error detection in streaming data
-
-Real-time embedded systems requiring rapid CRC validation
-
-This implementation exemplifies best practices in digital design, including pipeline parallelism and LUT utilization, to achieve fast and robust CRC-16 computation with low resource usage and minimal latency.
+               Data communication protocols (USB, Ethernet, SPI, etc.)
+               Storage devices
+               Error detection in streaming data
+               Real-time embedded systems requiring rapid CRC validation
+               This implementation exemplifies best practices in digital design, including pipeline parallelism and LUT utilization, to achieve fast and robust CRC-16 computation with low resource usage and      minimal latency.
 
 
  ## VERILOG CODE :
