@@ -39,8 +39,46 @@ Ideal for use in:
 -   Real-time embedded systems requiring rapid CRC validation
 -   This implementation exemplifies best practices in digital design, including pipeline parallelism and LUT utilization, to achieve fast and robust CRC-16 computation with low resource usage and      minimal latency.
 
+## verilog code : top_crc_design
 
- ## VERILOG CODE :
+  Top Module that connects CRC + Clock Wizard
+
+     module top_crc_design (
+    input  wire clk_100MHz,      
+    input  wire reset_rtl_0,     
+    input  wire [7:0] data_in,   
+    input  wire clear,           
+    output wire [15:0] crc_out   
+    );
+
+    
+    wire clk_out1_0;
+    wire clk_out2_0;
+    wire locked_0;
+
+    
+    design_1_wrapper clk_wiz_inst (
+        .clk_100MHz(clk_100MHz),
+        .reset_rtl_0(reset_rtl_0),
+        .clk_out1_0(clk_out1_0),
+        .clk_out2_0(clk_out2_0),
+        .locked_0(locked_0)
+    );
+
+    // CRC Instance
+    crc_parallel crc_inst (
+        .clk1(clk_out1_0),
+        .clk2(clk_out2_0),
+        .data_in(data_in),
+        .clear(clear),
+        .crc_out(crc_out)
+    );
+
+    endmodule
+
+ 
+
+ ## VERILOG CODE : crc_parallel 
 
 
 *    
