@@ -44,7 +44,7 @@ Ideal for use in:
   Top Module that connects CRC + Clock Wizard
 
      module top_crc_design (
-    input  wire clk_100MHz,      
+    input  wire clk,      
     input  wire reset_rtl_0,     
     input  wire [7:0] data_in,   
     input  wire clear,           
@@ -58,7 +58,7 @@ Ideal for use in:
 
     
     design_1_wrapper clk_wiz_inst (
-        .clk_100MHz(clk_100MHz),
+        .clk(clk),
         .reset_rtl_0(reset_rtl_0),
         .clk_out1_0(clk_out1_0),
         .clk_out2_0(clk_out2_0),
@@ -75,6 +75,8 @@ Ideal for use in:
     );
 
     endmodule
+
+
 
  
 
@@ -181,7 +183,39 @@ Ideal for use in:
 
 
     endmodule 
+ ## verilog code : design_wrapper
 
+ 
+    module design_1_wrapper
+      (clk_100MHz,
+    clk_out1_0,
+    clk_out2_0,
+    locked_0,
+    reset_rtl_0);
+     input clk_100MHz;
+     output clk_out1_0;
+     output clk_out2_0;
+     output locked_0;
+    input reset_rtl_0;
+
+     wire clk_100MHz;
+     wire clk_out1_0;
+     wire clk_out2_0;
+    wire locked_0;
+    wire reset_rtl_0;
+
+     design_1 design_1_i
+       (.clk_100MHz(clk_100MHz),
+        .clk_out1_0(clk_out1_0),
+        .clk_out2_0(clk_out2_0),
+        .locked_0(locked_0),
+        .reset_rtl_0(reset_rtl_0));
+     endmodule
+  ## clock wizard ip block :
+  i am using this ip block because fpga has only one oscilator and my design consist two clocks to avoid race condition ,so by using this ip it will generate two clocks and this derived clock will handle automatically by vivado 
+  <img width="1096" height="527" alt="Screenshot 2025-08-16 230752" src="https://github.com/user-attachments/assets/37bd0df2-fa86-41e8-9119-f57a678c3e5c" />
+
+   
 ## VERILOG TEST BENCH:
 
 *  `timescale 1ns/1ps
