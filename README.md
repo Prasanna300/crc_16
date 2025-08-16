@@ -33,7 +33,7 @@ a high-performance hardware implementation of the CRC-16 (Cyclic Redundancy Chec
 
 # Applications
 Ideal for use in:
--   Data communication protocols (USB, Ethernet, SPI, etc.)
+-   Data communication protocols (USB, bluetooth,  etc.)
 -   Storage devices
 -   Error detection in streaming data
 -   Real-time embedded systems requiring rapid CRC validation
