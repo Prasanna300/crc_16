@@ -241,15 +241,9 @@ Ideal for use in:
        initial begin
         clk1 = 0;
         clk2 = 0;
-        forever begin
-            #(PERIOD/2) clk1 = 1;    
-            #(PERIOD/4) clk1 = 0;    
-            #(PERIOD/4);             
-            clk2 = 1;               
-            #(PERIOD/4) clk2 = 0;   
-            #(PERIOD/4);             
-        end
        end
+       always #(PERIOD/2) clk1 = ~clk1;   
+       always #(PERIOD/4) clk2 = ~clk2;   
 
    
        integer k;
@@ -257,9 +251,6 @@ Ideal for use in:
         
         data_in = 8'h00;
         clear = 1;
-
-        
-        #30 clear = 1;
         #40 clear = 0;
         
         
